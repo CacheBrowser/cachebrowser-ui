@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CacheBrowser</title>
+
+    <!--jQuery-->
+    <script src="lib/jquery/jquery-2.2.1.min.js"></script>
+    <script>window.jQuery = window.$ = typeof module === 'object' ? module.exports : jQuery</script>
+
+    <!--Bootstrap-->
+    <link href="lib/bootstrap/bootstrap.min.css" rel="stylesheet">
+    <script src="lib/bootstrap/bootstrap.min.js"></script>
+
+    <!--Nifty-->
+    <link href="lib/nifty/nifty.css" rel="stylesheet">
+    <link href="lib/nifty/nifty-icons.css" rel="stylesheet">
+    <script src="lib/nifty/nifty.min.js"></script>
+
+    <!--Font Awesome-->
+    <link href="lib/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+
+    <!--Angular-->
+    <script src="lib/angular/angular.js" charset="utf-8"></script>
+    <script src="lib/angular-route/angular-route.js" charset="utf-8"></script>
+    <script src="lib/angular-bootstrap/ui-bootstrap.js" charset="utf-8"></script>
+        <script src="lib/angular-bootstrap/ui-bootstrap-tpls.js" charset="utf-8"></script>
+
+    <!--Animate.css-->
+    <link href="lib/animate-css/animate.min.css" rel="stylesheet">
+
+    <!--Switchery-->
+    <link href="lib/switchery/switchery.min.css" rel="stylesheet">
+    <script src="lib/switchery/switchery.min.js"></script>
+
+
+    <!--Bootstrap Select-->
+    <link href="lib/bootstrap-select/bootstrap-select.min.css" rel="stylesheet">
+    <script src="lib/bootstrap-select/bootstrap-select.min.js"></script>
+
+    <!--ChartJS-->
+    <script src="lib/Chart.js/Chart.js"></script>
+    <script src="lib/angular-chart.js/dist/angular-chart.js"></script>
+
+    <link rel="stylesheet" href="stylesheets/main.css" media="screen" title="no title" charset="utf-8">
+    <script charset="utf-8">
+        require("./app.js");
+    </script>
+</head>
+
+
+<body ng-app="cbgui" ng-controller='MainCtrl'>
+    <div id="osx-dragger"></div>
+    <div id="container" class="effect mainnav-sm">
+
+        <div class="boxed">
+            <div id="content-container" ng-view>
+
+            </div>
+
+            <nav id="mainnav-container" class="mainnav-fixed">
+                <div id="mainnav">
+                    <div id="mainnav-shortcut">
+                        <ul class="list-unstyled">
+                            <li class="col-xs-4">
+                                <a id="toggle-aside" class="shortcut-grid" href="#/">
+                                    <i class="psi-home"></i>
+                                    <span>Home</span>
+                                </a>
+                            </li>
+                            <li class="col-xs-4" >
+                                <a id="alert" class="shortcut-grid" href="#/bootstrapper">
+                                    <i class="psi-boot-2"></i>
+                                    <span> Bootstrapper</span>
+                                </a>
+                            </li>
+                            <li class="col-xs-4" >
+                                <a id="page-alert" class="shortcut-grid" href="#/monitor">
+                                    <i class="fa fa-area-chart"></i>
+                                    <span> Monitor </span>
+                                </a>
+                            </li>
+                            <li class="col-xs-4" >
+                                <a id="page-alert" class="shortcut-grid" href="#/monitor">
+                                    <i class="fa fa-gears"></i>
+                                    <span> Settings </span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </div>
+</body>
+</html>

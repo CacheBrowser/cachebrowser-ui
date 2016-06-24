@@ -1,0 +1,15 @@
+#p-home
+    header
+        .title.cb-font   CacheBrowser
+        
+    .panel
+        .panel-heading.panel-colorful(ng-class="'panel-'+runningStatus.color()")
+            .panel-title 
+                span.bold Status
+                span.label(ng-class="'label-'+runningStatus.color()") 
+                    | {{runningStatus.message()}}
+                
+        .panel-footer.text-right
+            button.btn.bold(ng-class="'btn-'+runningStatus.invertedColor()") 
+                | {{runningStatus.actionMessage()}} Cachebrowser 
+                

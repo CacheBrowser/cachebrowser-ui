@@ -1,0 +1,30 @@
+#p-bootstrapper {
+    height: 100vh;
+
+    .panel {
+        .panel-heading {
+            height: 12vh;
+        }
+        .panel-body {
+            height: 35vh;
+        }
+        .table-container {
+            height: 43vh;
+        }
+        .table {
+
+
+            tbody {
+                // display: block;
+            }
+
+            tr {
+                // display: block;
+            }
+        }
+        .panel-footer {
+            padding: 0px;
+            height: 10vh;
+        }
+    }
+}

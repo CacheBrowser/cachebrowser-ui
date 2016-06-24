@@ -1,0 +1,107 @@
+#p-monitor
+    .panel(ng-controller="MonitorLogCtrl")
+        .panel-heading
+            .panel-control
+                button.btn.btn-default(ng-click="refresh()")
+                    i.fa.fa-fw.fa-rotate-right
+                button.btn.btn-default
+                    i.fa.fa-fw(ng-class="context.monitoring ? 'fa-pause' : 'fa-play'" ng-click="toggleMonitoring()")
+            .panel-title Monitor
+        .panel-body(ng-show="!context.selectedLog" ng-controller="MonitorChartCtrl")
+            .chart-container
+                canvas#monitor-chart(width="500" height="100")
+                
+        .log-details(ng-show="context.selectedLog")
+            // Chart Button for returning to the chart view
+            .chart-icon(ng-click="context.selectedLog=null")
+                i.fa.fa-area-chart
+            
+            .tab-base.tab-stacked-left
+                uib-tabset(active="activeTab")
+                    uib-tab(index="0" heading="Details")
+                        .tab-content-container
+                            table.table.table-condensed
+                                tbody
+                                    tr
+                                        td.bold URL
+                                        td {{context.selectedLog.url}}
+                                    tr
+                                        td.bold Method
+                                        td {{context.selectedLog.method}}
+                                    tr
+                                        td.bold Status
+                                        td {{context.selectedLog.status_code}}
+                                    tr
+                                        td.bold Request Size
+                                        td {{context.selectedLog.request_size | prettyBytes }}
+                                    tr
+                                        td.bold Response Size
+                                        td {{context.selectedLog.response_size | prettyBytes}}    
+                    uib-tab(index="1" heading="Headers")
+                        .tab-content-container.headers(ng-init="htabActive='request'")
+                            .row
+                                .col-xs-6.htab-container(ng-click="htabActive='request'")
+                                    .htab(ng-class="{'active': htabActive == 'request'}") Request
+                                .col-xs-6.htab-container(ng-click="htabActive='response'")
+                                    .htab(ng-class="{'active': htabActive == 'response'}") Response
+                            .row
+                                .col-xs-12(ng-if="htabActive=='request'")
+                                    .htab-content-container
+                                        table.table.table-condensed
+                                            tbody
+                                                tr(ng-repeat="(key, val) in context.selectedLog.request_headers")
+                                                    td.bold {{key}}
+                                                    td {{val}}
+                                            
+                                .col-xs-12(ng-if="htabActive=='response'")
+                                    .htab-content-container
+                                        table.table.table-condensed
+                                            tbody
+                                                tr(ng-repeat="(key, val) in context.selectedLog.response_headers")
+                                                    td.bold {{key}}
+                                                    td {{val}}
+                 
+                    uib-tab(index="2" heading="CacheBrowser" )
+                        .tab-content-container
+                            table.table.table-condensed
+                                tbody
+                                    tr
+                                        td.bold Cachebrowsed
+                                        td(ng-if="context.selectedLog.cachebrowsed") Yes
+                                        td(ng-if="!context.selectedLog.cachebrowsed") No  {{context.selectedLog.cb_status_message ? ' - ' +context.selectedLog.cb_status_message : '' }}
+                                    tr(ng-if="context.selectedLog.cachebrowsed")
+                                        td.bold CDN
+                                        td {{context.selectedLog.cdn.name || context.selectedLog.cdn.name}}
+                                    tr
+                                        td.bold Upgraded to HTTPS
+                                        td {{context.selectedLog.scheme_upgraded ? ' Yes' : 'No'}}  
+                                    tr(ng-if="context.selectedLog.scheme=='https'")
+                                        td.bold SNI
+                                        td {{context.selectedLog.sni}}
+                                    tr
+                                        td.bold Address
+                                        td {{context.selectedLog.address }}
+
+                        
+        .table-container
+            table.table.table-hover.table-condensed.log-table
+                tbody
+                    tr.log.panel.panel-default(ng-repeat="log in filteredLogs | orderBy:'id':true | limitTo:numPerPage track by log.id" ng-click="context.selectedLog = log")
+                        td
+                            span.id {{log.id}}
+                        td 
+                            i.fa(ng-class="{'fa-check': log.cachebrowsed}")
+                        td 
+                            i.fa(ng-class="log.scheme_upgraded ? 'fa-check' : (log.scheme=='https' ? 'fa-check' : '')")
+                        td
+                            span.method {{log.method}}
+
+                        td
+                            span.label.label-table(ng-class="'label-' + statusCodeColor(log.status_code)") {{log.status_code}}
+
+                        td
+                            span.url {{log.shortUrl}}
+
+        .panel-footer
+            .panel-control
+                uib-pagination(total-items="logs.length" ng-model="currentPage" ng-change="pageChanged()" max-size="5" items-per-page="numPerPage")

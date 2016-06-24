@@ -1,0 +1,88 @@
+$top-padding: 0px;
+
+
+// Navigation Options
+$nav-width: 80px;
+$nav-icon-size: 20px;
+
+
+@import 'fonts';
+
+#content-container {
+    padding-top: $top-padding;
+}
+
+#mainnav-container {
+    padding-top: $top-padding;
+}
+
+// Dragger
+$dragger-height: 30px;
+#osx-dragger {
+    height: $dragger-height;
+    width: 100%;
+    -webkit-app-region: drag;
+    // background-color: blue;
+    position: absolute;
+    top: 0px;
+    // z-index: 1000;
+}
+
+#container {
+    #mainnav {
+        padding-top: $dragger-height;
+    }
+}
+
+// Nav Fix
+#container {
+    &.mainnav-sm {
+        #mainnav-container {
+            width: $nav-width;
+        }
+
+        #mainnav-shortcut {
+            max-height: 400px;
+        }
+
+        #mainnav-shortcut > ul > li {
+            text-align: center;
+
+            a {
+                padding-left: 0px;
+                padding-right: 0px;
+                i {
+                    font-size: $nav-icon-size;
+                    display: block;
+                }
+
+                span {
+                    display: block;
+                    font-weight: bold;
+                    font-size: 10px;
+                    padding: 3px 0px;
+                }
+            }
+        }
+
+        #content-container {
+            padding-left: $nav-width;
+            padding-bottom: 0px;
+        }
+
+        #footer {
+            padding-left: $nav-width;
+        }
+    }
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.overflow-auto {
+    overflow: auto;
+}
+
+@import 'home';
+@import 'monitor';

@@ -1,0 +1,105 @@
+
+#p-monitor {
+    height: 100vh;
+
+    .panel {
+        .panel-heading {
+            height: 12vh;
+        }
+        .panel-body {
+            height: 30vh;
+        }
+        .table-container {
+            height: 48vh;
+        }
+        .table.log-table {
+            tbody {
+                .label-table {
+                    width: 60%;
+                    font-size: 1em;
+                }
+            }
+
+            tr {
+                cursor: pointer;
+            }
+        }
+        .panel-footer {
+            padding: 0px;
+            height: 10vh;
+        }
+    }
+
+    .log-details {
+        position: relative;
+        background-color: rgb(240, 236, 236);
+
+        .chart-icon {
+            position: absolute;
+            top: 2px;
+            right: 10px;
+            font-size: 18px;
+            cursor: pointer;
+            z-index: 500;
+            &:hover {
+                text-shadow: 0px 0px 5px #F00;
+            }
+        }
+
+        .tab-base {
+            margin-bottom: 0px;
+
+            .tab-content-container {
+                height: 30vh;
+
+                &.headers{
+                    .htab-container {
+                        padding: 0px;
+                        .htab {
+                            position: relative;
+                            text-align: center;
+                            font-size: 12px;
+                            padding: 7px 15px;
+
+                            color: #555;
+                            background-color: rgb(243, 240, 240);
+                            border: 1px solid #eee;
+                            border-top: none;
+                            border-left: none;
+
+                            &.active {
+                                background-color: white;
+                                border: none;
+                            }
+
+                            &:not(.active) {
+                                cursor: pointer;
+                                &:hover {
+                                    background-color: rgb(248, 243, 243);
+                                }
+                            }
+                        }
+                    }
+
+                    .htab-content-container {
+                        overflow-y: auto;
+                        height: 100px;
+                    }
+                }
+            }
+
+            .tab-content {
+                box-shadow: none;
+                padding: 0px;
+                overflow-y: auto;
+
+                td {
+                    border-top: none !important;
+                    cursor: default;
+                }
+            }
+
+        }
+
+    }
+}
