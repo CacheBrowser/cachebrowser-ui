@@ -6,8 +6,9 @@ import async from 'async';
 import prettyBytes from 'pretty-bytes';
 
 import { Routes } from './app.routes';
-import { COMPONENTS } from './app.config';
+import { COMPONENTS, SERVICES } from './app.config';
 
+import { ApplicationCtrl } from './app.controller';
 
 function bootstrapComponent(component) {
     var pageCtrl = component.PAGE_CONTROLLER;
@@ -19,10 +20,22 @@ function bootstrapComponent(component) {
     });
 }
 
+function bootstrapService(service) {
+    var serviceName = service.SERVICE_NAME;
+    var service = service.SERVICE;
+    Application.service(serviceName, service);
+}
+
 _.each(COMPONENTS, (componentName) => {
     var component = require(componentName);
     console.log("Loading Component: " + componentName);
     bootstrapComponent(component);
+});
+
+_.each(SERVICES, (serviceName) => {
+    var service = require(serviceName);
+    console.log("Loading Service: " + serviceName);
+    bootstrapService(service);
 });
 
 Application.config(function($routeProvider) {
@@ -51,33 +64,4 @@ Application.filter('prettyBytes', function() {
     };
 });
 
-Application.service('ipc', function() {
-    var sock = new WebSocket("ws://127.0.0.1:9000");
-    var self = this;
-
-    self.sock = sock;
-    self.listeners = [];
-
-    sock.onopen = function () {
-       console.log("connected");
-    }
-    sock.onclose = function (evt) {
-       console.log("connection lost", evt.reason);
-       sock = null;
-    }
-    sock.onmessage = function (evt) {
-       var message = JSON.parse(evt.data);
-       for (var i = 0; i < self.listeners.length; i++) {
-           self.listeners[i](message.data);
-       }
-    }
-
-    // TODO handle removing to avoid memory leaks
-    this.subscribe = function(handler) {
-        self.listeners.push(handler);
-    }
-});
-
-Application.controller('MainCtrl', function($scope) {
-    $scope.cbStatus = 'stopped';
-});
+Application.controller('ApplicationCtrl', ApplicationCtrl);

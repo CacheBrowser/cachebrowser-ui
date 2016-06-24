@@ -5,3 +5,7 @@ export var COMPONENTS = [
     './components/monitor',
     './components/bootstrapper'
 ]
+
+export var SERVICES = [
+    './services/ipc'
+]

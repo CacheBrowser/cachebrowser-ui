@@ -8,7 +8,7 @@ export function MonitorCtrl($scope, ipc) {
         monitoring: true
     };
 
-    ipc.subscribe(function (message) {
+    var ipcHandler = ipc.subscribe('request-log', function (message) {
         if (!$scope.context.monitoring) {
             return;
         }
@@ -31,6 +31,7 @@ export function MonitorCtrl($scope, ipc) {
         }
         $scope.$broadcast('monitor-log', log, isNew);
     });
+    $scope.$on('$destroy', ipcHandler);
 
     $scope.toggleMonitoring = function() {
         $scope.context.monitoring = !$scope.context.monitoring;
