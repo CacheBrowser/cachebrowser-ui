@@ -1,5 +1,6 @@
 {
   "name": "cachebrowser-gui",
+  "productName": "CacheBrowser",
   "version": "0.0.1",
   "description": "GUI for CacheBrowser",
   "main": "main.js",
@@ -11,5 +12,16 @@
     "async": "^2.0.0-rc.6",
     "lodash": "^4.13.1",
     "pretty-bytes": "^3.0.1"
+  },
+  "packageNameTemplate": "{{name}}-v{{version}}-{{platform}}-{{arch}}",
+  "osx": {
+    "build": "1",
+    "identifier": "net.cachebrowser.gui",
+    "LSApplicationCategoryType": "public.app-category.productivity",
+    "//codeSignIdentitiy": {
+      "dmg": "Developer ID Application: Company Name (APPIDENTITY)",
+      "MAS": "3rd Party Mac Developer Application: Company Name (APPIDENTITY)",
+      "MASInstaller": "3rd Party Mac Developer Installer: Company Name (APPIDENTITY)"
+    }
   }
 }

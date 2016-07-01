@@ -30,7 +30,9 @@
                                         td {{context.selectedLog.method}}
                                     tr
                                         td.bold Status
-                                        td {{context.selectedLog.status_code}}
+                                        td(ng-if="context.selectedLog.status_code") {{context.selectedLog.status_code}}
+                                        td(ng-if="!context.selectedLog.status_code") 
+                                            i.fa.fa-spinner.fa-spin
                                     tr
                                         td.bold Request Size
                                         td {{context.selectedLog.request_size | prettyBytes }}
@@ -68,7 +70,7 @@
                                     tr
                                         td.bold Cachebrowsed
                                         td(ng-if="context.selectedLog.cachebrowsed") Yes
-                                        td(ng-if="!context.selectedLog.cachebrowsed") No  {{context.selectedLog.cb_status_message ? ' - ' +context.selectedLog.cb_status_message : '' }}
+                                        td(ng-if="!context.selectedLog.cachebrowsed") No  {{context.selectedLog.cb_error ? ' - ' +context.selectedLog.cb_error : '' }}
                                     tr(ng-if="context.selectedLog.cachebrowsed")
                                         td.bold CDN
                                         td {{context.selectedLog.cdn.name || context.selectedLog.cdn.name}}

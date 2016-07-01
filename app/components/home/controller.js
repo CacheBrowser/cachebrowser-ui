@@ -1,4 +1,20 @@
-export function HomeCtrl($scope) {
+export function HomeCtrl($scope, processManager) {
+    if (processManager.isRunning()) {
+        $scope.cbStatus = 'running';
+    } else {
+        $scope.cbStatus = 'stopped';
+    }
+
+    $scope.$on('process/start', () => {
+        $scope.cbStatus = 'running';
+        $scope.$apply();
+    });
+
+    $scope.$on('process/stop', () => {
+        $scope.cbStatus = 'stopped';
+        $scope.$apply();
+    });
+
     $scope.runningStatus = {
         _pick: function(running, stopped, dunno) {
             if ($scope.cbStatus == 'running') {
@@ -21,5 +37,13 @@ export function HomeCtrl($scope) {
         actionMessage: function () {
             return this._pick('Stop', 'Start', 'Start');
         }
-    }
+    };
+
+    $scope.toggleProcess = function() {
+        if (!processManager.isRunning()) {
+            processManager.startProcess();
+        } else {
+            processManager.stopProcess();
+        }
+    };
 }

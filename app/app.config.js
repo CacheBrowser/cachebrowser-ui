@@ -7,5 +7,6 @@ export var COMPONENTS = [
 ]
 
 export var SERVICES = [
-    './services/ipc'
+    './services/ipc',
+    './services/process'
 ]

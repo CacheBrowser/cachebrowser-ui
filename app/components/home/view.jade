@@ -10,6 +10,6 @@
                     | {{runningStatus.message()}}
                 
         .panel-footer.text-right
-            button.btn.bold(ng-class="'btn-'+runningStatus.invertedColor()") 
+            button.btn.bold(ng-class="'btn-'+runningStatus.invertedColor()" ng-click="toggleProcess()") 
                 | {{runningStatus.actionMessage()}} Cachebrowser 
                 

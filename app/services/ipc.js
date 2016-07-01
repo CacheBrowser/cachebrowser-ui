@@ -1,11 +1,13 @@
 import * as _ from 'lodash';
+import Reconnector from '../common/websocket';
 
 class IPCService {
     constructor($rootScope, $q) {
         this.rootScope = $rootScope;
         this.Q = $q;
 
-        this.sock = new WebSocket("ws://127.0.0.1:9000");
+        var ws = new WebSocket("ws://127.0.0.1:9000");
+        this.sock = new Reconnector(ws);
 
         this.listeners = {};
         this.nextListenerId = 1;
@@ -13,19 +15,34 @@ class IPCService {
         this.pendingRequests = {};
         this.nextRequestId = 1;
 
-        this.sock.onopen = () => {
-           console.log("connected");
-        };
+        this.sock.on('open', () => {
+           console.debug("connected");
+           this.emit('connect');
+        });
 
-        this.sock.onclose = (evt) => {
-            console.log("connection lost", evt.reason);
-            this.sock = null;
-        };
+        this.sock.on('close', (code, reason) => {
+            console.debug("connection lost", reason);
+            this.emit('disconnect', code, reason);
+        });
 
-        this.sock.onmessage = (evt) => {
-            var message = JSON.parse(evt.data);
+        this.sock.on('message', (data) => {
+            var message = JSON.parse(data);
             this.onmessage(message)
-        };
+        });
+
+        this.sock.on('error', (err) => {
+            console.error("ERROR ");
+        });
+
+        this.sock.on('connecting', () => {
+            console.debug("connecting");
+        });
+    }
+
+    emit(event) {
+        var args = ['ipc/' + event];
+        args = args.concat(Array.prototype.slice.call(arguments));
+        this.rootScope.$broadcast.apply(this.rootScope, args);
     }
 
     onmessage(message) {
@@ -40,6 +57,7 @@ class IPCService {
             this.onresponse(message);
         }
     }
+
 
     subscribe(channel, callback) {
         if (!this.listeners[channel]) {
@@ -84,37 +102,67 @@ class IPCService {
         });
     }
 
-    request(method, data) {
+    request(route, params) {
         var defered = this.Q.defer();
 
-        var id = this.nextRequestId++;
+        var sendRequest = () => {
+            var id = this.nextRequestId++;
 
-        var message = {
-            method: method,
-            params: data,
-            request_id: id
-        };
+            var message = {
+                route: route,
+                params: params,
+                request_id: id
+            };
 
-        this.pendingRequests[id] = {
-            message: message,
-            promise: defered.promise
+            this.pendingRequests[id] = {
+                message: message,
+                defered: defered
+            }
+
+            this.sock.send(JSON.stringify(message));
         }
 
-        this.sock.send(JSON.stringify(message));
+        if (this.sock.readyState != WebSocket.OPEN) {
+            this.sock.forceReconnect();
+
+            var open = () => {
+                this.sock.removeListener('open', open);
+                this.sock.removeListener('close', close);
+                process.nextTick(sendRequest);
+            };
+
+            var close = () => {
+                this.sock.removeListener('open', open);
+                this.sock.removeListener('close', close);
+                defered.reject();
+            };
+
+            this.sock.once('open', open);
+            this.sock.once('close', close);
+        } else {
+            sendRequest();
+        }
 
         return defered.promise;
     }
 
-    onresponse(request, response) {
+    onresponse(message) {
         var id = message.request_id;
         var response = message.response;
 
         var request = this.pendingRequests[id];
         delete this.pendingRequests[id];
 
-        var promise = request.promise;
+        var defered = request.defered;
+        defered.resolve(response);
+    }
 
-        promise.resolve(response);
+    ping() {
+        return this.request('/ping');
+    }
+
+    refreshDelay() {
+        this.sock.refreshDelay();
     }
 }
 

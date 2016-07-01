@@ -1,7 +1,78 @@
 #p-bootstrapper
-    .panel
+    .panel#main-panel
         .panel-heading
             .panel-control
                 ul.nav.nav-tabs
                     
             .panel-title Bootstrapper
+        .panel-body
+            .form-inline#table-control
+                .row
+                    .col-xs-5
+                        .form-group
+                            input(type="text" placeholder="Search")
+                    .col-xs-3.col-xs-offset-1.table-control-right
+                        .form-group
+                            button.btn.btn-primary.btn-labeled.fa.fa-plus(ng-click="subPage='add-host'") Add Host
+                    .col-xs-2.table-control-right
+                        .form-group
+                            button.btn.btn-success.btn-labeled.fa.fa-plus(ng-click="subPage='add-cdn'") Add CDN
+            #host-add.add-form(ng-controller="BootstrapperAddHostCtrl" ng-show="subPage=='add-host'")
+                .row
+                    .col-xs-6
+                        .form-group
+                            label Hostname
+                            input(type="text" ng-model="form.hostname")
+                    .col-xs-6
+                        .form-group
+                            label CDN
+                            input(type="text" ng-model="form.cdn")
+                .row
+                    .col-xs-6
+                        .checkbox
+                            label.form-checkbox.form-normal.form-primary.form-text
+                                input(type="checkbox" checked="" ng-model="form.ssl")
+                                | HTTPS Support
+                .row
+                    .col-xs-4
+                        button.btn.btn-success.btn-block(ng-click="submitForm()") Add Host
+                    .col-xs-4.col-xs-offset-1
+                        button.btn.btn-danger.btn-block(ng-click="cancel()") Cancel
+            #cdn-add.add-form(ng-controller="BootstrapperAddCDNCtrl" ng-show="subPage=='add-cdn'")
+                .row
+                    .col-xs-6
+                        .form-group
+                            label CDN ID
+                            input(type="text" ng-model="form.id")
+                    .col-xs-6
+                        .form-group
+                            label CDN Name
+                            input(type="text" ng-model="form.name")
+                .row
+                    .col-xs-6
+                        .form-group
+                            label Edge Server Address
+                            input(type="text" ng-model="form.edge_server")
+                .row
+                    .col-xs-4
+                        button.btn.btn-success.btn-block(ng-click="submitForm()") Add CDN
+                    .col-xs-4.col-xs-offset-1
+                        button.btn.btn-danger.btn-block(ng-click="cancel()") Cancel
+            #host-list(ng-show="subPage=='host-list'")
+                table.table.table-hover
+                    thead
+                        tr
+                            th Hostname
+                            th CDN
+                            th HTTPS Support
+                            th 
+                    tbody
+                        tr(ng-repeat="host in hosts track by host.hostname")
+                            td {{host.hostname}}
+                            td {{host.cdn.name || host.cdn.id}}
+                            td {{host.ssl}}
+                            td.delete(ng-click="deleteHost(host)")
+                                i.fa.fa-close
+        .panel-footer
+            .panel-control
+                uib-pagination(total-items="hosts.length" ng-model="currentPage"  max-size="5" items-per-page="numPerPage")
