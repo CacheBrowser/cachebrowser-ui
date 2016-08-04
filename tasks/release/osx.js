@@ -7,6 +7,8 @@ var asar = require('asar');
 var utils = require('../utils');
 var child_process = require('child_process');
 
+var releaseConf = require('../../config/release');
+
 var projectDir;
 var releasesDir;
 var tmpDir;
@@ -18,8 +20,9 @@ var init = function () {
     tmpDir = projectDir.dir('./tmp', { empty: true });
     releasesDir = projectDir.dir('./releases');
     manifest = projectDir.read('app/package.json', 'json');
-    finalAppDir = tmpDir.cwd(manifest.productName + '.app');
+    finalAppDir = releasesDir.cwd(manifest.productName + '.app');
 
+    finalAppDir.remove();
     return new Q();
 };
 
@@ -43,6 +46,10 @@ var packageBuiltApp = function () {
     });
 
     return deferred.promise;
+};
+
+var bundleDependencies = function () {
+    projectDir.copy(releaseConf.cachebrowserDir, finalAppDir.path('Contents/PlugIns/cachebrowser'))
 };
 
 var finalize = function () {
@@ -181,15 +188,17 @@ var cleanClutter = function () {
     return tmpDir.removeAsync('.');
 };
 
+
 module.exports = function () {
     return init()
         .then(copyRuntime)
         .then(cleanupRuntime)
         .then(packageBuiltApp)
+        .then(bundleDependencies)
         .then(finalize)
         .then(renameApp)
-        .then(signApp)
-        .then(packToDmgFile)
+        // .then(signApp)
+        // .then(packToDmgFile)
         .then(cleanClutter)
         .catch(console.error);
 };
