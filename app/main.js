@@ -4,15 +4,23 @@ const app = electron.app
 // Module to create native browser window.
 const BrowserWindow = electron.BrowserWindow
 
+import {WINDOWS, OSX, LINUX, isPlatform, UnsupportedPlatform} from './common/platform'
+
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow
 
 function createWindow () {
-  // Create the browser window.
-  // mainWindow = new BrowserWindow({width: 600, height: 400})
-  mainWindow = new BrowserWindow({width: 650, height: 450, titleBarStyle: 'hidden'})
-  // mainWindow = new BrowserWindow({width: 600, height: 400, frame:false})
+  // Check Platform
+  if (!isPlatform(WINDOWS, LINUX, OSX)) {
+    throw new UnsupportedPlatform()
+  }
+
+  if (isPlatform(WINDOWS, LINUX)) {
+    mainWindow = new BrowserWindow({width: 650, height: 450, frame: 'false'})
+  } else if(isPlatform(OSX)) {
+    mainWindow = new BrowserWindow({width: 650, height: 450, titleBarStyle: 'hidden'})
+  }
 
   // and load the index.html of the app.
   mainWindow.loadURL(`file://${__dirname}/index.html`)
@@ -50,6 +58,3 @@ app.on('activate', function () {
     createWindow()
   }
 })
-
-// In this file you can include the rest of your app's specific main process
-// code. You can also put them in separate files and require them here.

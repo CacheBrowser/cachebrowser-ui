@@ -59,7 +59,7 @@ var babelTask = function () {
 		}))
 		.pipe(sourcemaps.write('.'))
 		.pipe(gulp.dest(destDir.path('.')));
-}
+};
 gulp.task("babel", babelTask);
 gulp.task('babel-watch', babelTask);
 
