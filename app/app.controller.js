@@ -1,3 +1,3 @@
-export function ApplicationCtrl($scope, ipc, processManager) {
-    $scope.cbStatus = 'stopped';
+export function ApplicationCtrl($scope) {
+    $scope.cbStatus = 'stopped'
 }

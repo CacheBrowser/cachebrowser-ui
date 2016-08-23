@@ -1,0 +1,29 @@
+{
+  "extends": "eslint:recommended",
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true,
+      "modules": true
+    }
+  },
+  "globals": {
+    "console": true,
+    "process": true,
+    "__dirname": true,
+    "setTimeout": true,
+    "Set": true,
+    "document": true,
+    "WebSocket": true,
+
+    "angular": true
+  },
+  "rules": {
+    "semi": ["error", "never"]
+  },
+  "envs": [
+    "node",
+    "browser"
+  ]
+}

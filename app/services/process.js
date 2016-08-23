@@ -1,5 +1,6 @@
 import { spawn } from 'child_process'
-import EventEmitter from 'events'
+import { info, warn } from 'loglevel'
+
 import env from '../env'
 import * as path from 'path'
 import * as platform from '../common/platform'
@@ -35,31 +36,28 @@ class ProcessManager {
          */
 
 
-        var cbpath = env.cachebrowserPath;
+        var cbpath = env.cachebrowserPath
         if (typeof(cbpath) == 'object') {
             cbpath = cbpath[process.platform]
         }
 
         cbpath = cbpath || 'cachebrowser'
 
-        console.log(cbpath)
-
         // If path is relative
         if (path.resolve(cbpath) !== path.normalize(cbpath)) {
             cbpath = path.join(platform.projectRoot(), cbpath)
         }
-        console.log(cbpath)
     
         this.process = spawn(cbpath, [], {
             stdio: ['ignore', 'ignore', 'ignore'],
             detached: true
-        });
+        })
         this.process.unref()
 
         this.running = true
 
         this.process.stderr.on('data', function(data) {
-            console.log(data.toString());
+            info(data.toString())
         })
 
         // this.process.on('error', err => {
@@ -68,23 +66,23 @@ class ProcessManager {
 
         // TODO 'exit' for Windows
         this.process.on('close', (code, signal) => {
-            console.log(`Process Closed ${code}`)
+            warn(`Process Closed ${code} ${signal}`)
             this.running = false
 
             this.process = null
         })
 
-        this.ipc.refreshDelay();
+        this.ipc.refreshDelay()
         setTimeout(()=>{this.ipc.ping()}, 1000)
     }
 
     stopProcess() {
-        console.log("Killing")
+        info("Killing cachebrowser daemon")
         // // Dont know why this doesn't work
         // this.process.kill('SIGHUP')
         this.ipc.request('/close').then((message) => {
-                console.log(message)
-        });
+            info(message)
+        })
     }
 
     isRunning() {

@@ -14,10 +14,10 @@ export function projectRoot() {
 export function isPlatform() {
     for (let i = 0; i < arguments.length; i++) {
         if (process.platform == arguments[i]) {
-            return true;
+            return true
         }
     }
-    return false;
+    return false
 }
 
 export function UnsupportedPlatform() {

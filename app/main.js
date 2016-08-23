@@ -1,10 +1,14 @@
-const electron = require('electron')
+// eslint-disable-next-line
+var electron = require('electron') // Dont use import syntax for this
+
+import {WINDOWS, OSX, LINUX, isPlatform, UnsupportedPlatform} from './common/platform'
+
 // Module to control application life.
 const app = electron.app
 // Module to create native browser window.
 const BrowserWindow = electron.BrowserWindow
 
-import {WINDOWS, OSX, LINUX, isPlatform, UnsupportedPlatform} from './common/platform'
+
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.

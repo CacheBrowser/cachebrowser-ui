@@ -1,4 +1,4 @@
-import { HomeCtrl } from './controller';
+import { HomeCtrl } from './controller'
 
-export const PAGE_CONTROLLER = HomeCtrl;
-export const CONTROLLERS = [];
+export const PAGE_CONTROLLER = HomeCtrl
+export const CONTROLLERS = []

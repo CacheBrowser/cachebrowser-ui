@@ -1,67 +1,72 @@
-var Application = angular.module('cbgui', ['ngRoute', 'ui.bootstrap', 'chart.js']);
+var Application = angular.module('cbgui', ['ngRoute', 'ui.bootstrap', 'chart.js'])
 
-import * as _ from 'lodash';
-import async from 'async';
+import * as _ from 'lodash'
+import prettyBytes from 'pretty-bytes'
+import { info } from 'loglevel'
 
-import prettyBytes from 'pretty-bytes';
+import { Routes } from './app.routes'
+import { COMPONENTS, SERVICES } from './app.config'
 
-import { Routes } from './app.routes';
-import { COMPONENTS, SERVICES } from './app.config';
+import { ApplicationCtrl } from './app.controller'
 
-import { ApplicationCtrl } from './app.controller';
 
 function bootstrapComponent(component) {
-    var pageCtrl = component.PAGE_CONTROLLER;
-    var ctrls = component.CONTROLLERS;
+    var pageCtrl = component.PAGE_CONTROLLER
+    var ctrls = component.CONTROLLERS
 
-    Application.controller(pageCtrl.name, pageCtrl);
+    Application.controller(pageCtrl.name, pageCtrl)
     _.each(ctrls, (ctrl) => {
-        Application.controller(ctrl.name, ctrl);
-    });
+        Application.controller(ctrl.name, ctrl)
+    })
 }
 
-function bootstrapService(service) {
-    var serviceName = service.SERVICE_NAME;
-    var service = service.SERVICE;
-    Application.service(serviceName, service);
+function bootstrapService(serviceOptions) {
+    var serviceName = serviceOptions.SERVICE_NAME
+    var service = serviceOptions.SERVICE
+    Application.service(serviceName, service)
 }
 
-_.each(COMPONENTS, (componentName) => {
-    var component = require(componentName);
-    console.log("Loading Component: " + componentName);
-    bootstrapComponent(component);
-});
+COMPONENTS.forEach(componentName => {
+    // eslint-disable-next-line no-undef
+    var component = require(componentName)
 
-_.each(SERVICES, (serviceName) => {
-    var service = require(serviceName);
-    console.log("Loading Service: " + serviceName);
-    bootstrapService(service);
-});
+    info("Loading Component: " + componentName)
+    bootstrapComponent(component)
+})
 
-Application.config(function($routeProvider) {
-    _.each(Routes, function(route) {
+SERVICES.forEach(serviceName => {
+    // eslint-disable-next-line no-undef
+    var service = require(serviceName)
+
+    info("Loading Service: " + serviceName)
+    bootstrapService(service)
+})
+
+Application.config($routeProvider => {
+    Routes.forEach(route => {
         $routeProvider.when(route.path, {
             templateUrl: route.template,
             controller: route.controller
         })
-    });
-});
+    })
+})
 
-Application.config(function(ChartJsProvider) {
-    Chart.defaults.global.showScale = false;
-    Chart.defaults.Line.pointDotRadius = 0;
-    Chart.defaults.global.responsive = false;
-    Chart.defaults.global.maintainAspectRatio = false;
-    Chart.defaults.global.showTooltips = false;
-});
+Application.config( () => {
+    /* global Chart */
+    Chart.defaults.global.showScale = false
+    Chart.defaults.Line.pointDotRadius = 0
+    Chart.defaults.global.responsive = false
+    Chart.defaults.global.maintainAspectRatio = false
+    Chart.defaults.global.showTooltips = false
+})
 
-Application.filter('prettyBytes', function() {
-    return function(input) {
+Application.filter('prettyBytes', () => {
+    return input => {
         if (isNaN(input)) {
-            return input;
+            return input
         }
-        return prettyBytes(input);
-    };
-});
+        return prettyBytes(input)
+    }
+})
 
-Application.controller('ApplicationCtrl', ApplicationCtrl);
+Application.controller('ApplicationCtrl', ApplicationCtrl)

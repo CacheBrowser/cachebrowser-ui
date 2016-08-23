@@ -66,7 +66,7 @@ gulp.task("babel", function () {
 
 
 gulp.task('sass', function () {
-    return gulp.src('stylesheets/main.scss')
+    return gulp.src(srcDir.path('stylesheets/main.scss'))
         .pipe(sass({ style: 'expanded' }))
         .pipe(plumber())
         .pipe(gulp.dest(destDir.path('stylesheets')));

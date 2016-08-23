@@ -10,9 +10,10 @@
   "author": "ha-D",
   "dependencies": {
     "async": "^2.0.0-rc.6",
+    "fs-jetpack": "^0.9.0",
     "lodash": "^4.13.1",
-    "pretty-bytes": "^3.0.1",
-    "fs-jetpack": "^0.9.0"
+    "loglevel": "^1.4.1",
+    "pretty-bytes": "^3.0.1"
   },
   "packageNameTemplate": "{{name}}-v{{version}}-{{platform}}-{{arch}}",
   "osx": {
