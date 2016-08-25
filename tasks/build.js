@@ -12,6 +12,7 @@ var jetpack = require('fs-jetpack');
 var sourcemaps = require('gulp-sourcemaps');
 var babel = require('gulp-babel');
 var eslint = require('gulp-eslint');
+var yargs = require('yargs');
 
 var utils = require('./utils');
 
@@ -82,7 +83,15 @@ gulp.task('views', function () {
 
 
 gulp.task('environment', function () {
-    var configFile = 'config/env_' + utils.getEnvName() + '.json';
+    var argv = yargs.argv;
+
+    var configFile = null;
+    if (argv.conf) {
+        configFile = argv.conf;
+    } else {
+        configFile = 'config/env_' + utils.getEnvName() + '.json';
+    }
+
     projectDir.copy(configFile, destDir.path('env.json'), {overwrite: true});
 });
 

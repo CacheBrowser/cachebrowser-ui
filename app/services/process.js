@@ -44,12 +44,13 @@ class ProcessManager {
         cbpath = cbpath || 'cachebrowser'
 
         // If path is relative
-        if (path.resolve(cbpath) !== path.normalize(cbpath)) {
+        if (cbpath.startsWith('./') || cbpath.startsWith('../')) {
             cbpath = path.join(platform.projectRoot(), cbpath)
         }
-    
+
+        warn(cbpath)
         this.process = spawn(cbpath, [], {
-            stdio: ['ignore', 'ignore', 'ignore'],
+            // stdio: ['ignore', 'ignore', 'ignore'],
             detached: true
         })
         this.process.unref()
@@ -60,9 +61,9 @@ class ProcessManager {
             info(data.toString())
         })
 
-        // this.process.on('error', err => {
-        //     console.log(`Process Error ${err}`)
-        // })
+        this.process.on('error', err => {
+            warn(`Process Error ${err}`)
+        })
 
         // TODO 'exit' for Windows
         this.process.on('close', (code, signal) => {
