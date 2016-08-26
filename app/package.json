@@ -7,7 +7,7 @@
   "scripts": {
     "start": "electron main.js"
   },
-  "author": "ha-D",
+  "author": "Hadi Zolfaghari <hadi@cs.umass.edu>",
   "dependencies": {
     "async": "^2.0.0-rc.6",
     "fs-jetpack": "^0.9.0",

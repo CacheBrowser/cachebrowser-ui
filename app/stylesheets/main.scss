@@ -84,6 +84,15 @@ $dragger-height: 30px;
     overflow: auto;
 }
 
+#dev-tools-toggle {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    color: #ddd;
+    z-index: 1000;
+    cursor: pointer;
+}
+
 @import 'home';
 @import 'monitor';
 @import 'bootstrapper';
