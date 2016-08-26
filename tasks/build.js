@@ -101,10 +101,10 @@ gulp.task('package-json', function () {
 
     // Add "dev" suffix to name, so Electron will write all data like cookies
     // and localStorage in separate places for production and development.
-    if (utils.getEnvName() === 'development') {
-        manifest.name += '-dev';
-        manifest.productName += ' Dev';
-    }
+    // if (utils.getEnvName() === 'development') {
+    //     manifest.name += '-dev';
+    //     manifest.productName += ' Dev';
+    // }
 
     destDir.write('package.json', manifest, {overwrite: true});
 });
