@@ -1,6 +1,6 @@
 #p-home {
     padding: 20px;
-
+    background-color: #f8f8f8;
     .cb-font {
         font-family: 'neuropol', 'Helvetica Neue', Helvetica, Arial, sans-serif;
     }
@@ -16,4 +16,20 @@
         }
     }
 
+    .news {
+        .panel-body {
+            height: 230px;
+        }
+    }
+
+    .browser-icon-container {
+        text-align: center;
+        .browser-icon {
+            cursor: pointer;
+            margin-left: 15px;
+            margin-right: 15px;
+        }
+
+
+    }
 }

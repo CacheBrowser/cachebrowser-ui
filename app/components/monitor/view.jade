@@ -8,6 +8,8 @@
                     i.fa.fa-fw(ng-class="context.monitoring ? 'fa-pause' : 'fa-play'" ng-click="toggleMonitoring()")
             .panel-title Monitor
         .panel-body(ng-show="!context.selectedLog" ng-controller="MonitorChartCtrl")
+            .alert.alert-warning(ng-if="!dataReceived")
+                | No data received yet. Start Browsing with CacheBrowser to view requests.
             .chart-container
                 canvas#monitor-chart(width="500" height="100")
                 

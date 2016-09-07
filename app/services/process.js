@@ -50,7 +50,7 @@ class ProcessManager {
 
         warn(cbpath)
         this.process = spawn(cbpath, [], {
-            // stdio: ['ignore', 'ignore', 'ignore'],
+            stdio: ['ignore', 'ignore', 'ignore'],
             detached: true
         })
         this.process.unref()

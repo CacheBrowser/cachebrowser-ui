@@ -1,15 +1,36 @@
 #p-home
     header
         .title.cb-font   CacheBrowser
-        
-    .panel
-        .panel-heading.panel-colorful(ng-class="'panel-'+runningStatus.color()")
-            .panel-title 
-                span.bold Status
-                span.label(ng-class="'label-'+runningStatus.color()") 
-                    | {{runningStatus.message()}}
-                
-        .panel-footer.text-right
-            button.btn.bold(ng-class="'btn-'+runningStatus.invertedColor()" ng-click="toggleProcess()") 
-                | {{runningStatus.actionMessage()}} Cachebrowser 
-                
+
+    .row
+        .col-xs-6
+            .panel
+                .panel-heading.panel-colorful(ng-class="'panel-'+runningStatus.color()")
+                    .panel-title
+                        span.bold Status
+                        span.label(ng-class="'label-'+runningStatus.color()")
+                            | {{runningStatus.message()}}
+
+                .panel-footer.text-right
+                    button.btn.bold(ng-class="'btn-'+runningStatus.invertedColor()" ng-click="toggleProcess()")
+                        | {{runningStatus.actionMessage()}} Cachebrowser
+            //button.btn.btn-block.btn-primary.btn-labeled.fa.fa-chrome Install Chrome Extension
+            //button.btn.btn-block.btn-warning.btn-labeled.fa.fa-firefox Install Firefox Plugin
+            .panel
+                .panel-heading
+                    .panel-title
+                        span.bold Install Browser Plugins
+                .panel-body
+                    .browser-icon-container
+                        i.browser-icon.fa.fa-4x.fa-chrome
+                        i.browser-icon.fa.fa-4x.fa-firefox
+
+
+
+        .col-xs-6
+            .panel.news
+                .panel-heading.panel-colorful.panel-purple
+                    .panel-title
+                        span.bold Whats New?
+                .panel-body
+

@@ -3,7 +3,8 @@
 export var COMPONENTS = [
     './components/home',
     './components/monitor',
-    './components/bootstrapper'
+    './components/bootstrapper',
+    './components/news'
 ]
 
 export var SERVICES = [

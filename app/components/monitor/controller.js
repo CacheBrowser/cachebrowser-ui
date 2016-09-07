@@ -8,10 +8,14 @@ export function MonitorCtrl($scope, ipc) {
         monitoring: true
     }
 
+    $scope.dataReceived = false
+
     var ipcHandler = ipc.subscribe('request-log', function (message) {
         if (!$scope.context.monitoring) {
             return
         }
+
+        $scope.dataReceived = true
 
         var fId = message.id
         var log = $scope.logMap[fId]
