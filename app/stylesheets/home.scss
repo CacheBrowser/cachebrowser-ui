@@ -33,3 +33,28 @@
 
     }
 }
+
+.p-browser-plugin {
+    background-color: white;
+    height: 100%;
+
+    .panel-title {
+        i {
+            margin-right: 10px;
+        }
+    }
+
+    .btn-install {
+        float: right;
+        margin-top: -8px;
+        width: 80px;
+    }
+
+    .loader-container {
+        height: 100px;
+    }
+}
+
+#p-chrome {
+
+}

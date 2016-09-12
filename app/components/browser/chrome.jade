@@ -1,0 +1,15 @@
+#p-chrome.p-browser-plugin.p-fill.p-base.panel
+    .panel-heading
+        .panel-title #[i.fa.fa-chrome.fa-lg] Chrome
+    .panel-body
+            .well.well-primary(ng-if="state=='none'", ng-click="install()")
+                | Install the CacheBrowser plugin for Chrome
+                .button.btn.btn-success.btn-install
+                    | Install
+            .loader-container(ng-if="state=='loading'")
+                .loader
+            .text-center.text-2x.text-bold(ng-if="state=='loading'") Installing Extension
+            .alert.alert-success(ng-if="state=='install-success'")
+                | Chrome Extension successfully installed, please restart Chrome
+            .alert.alert-danger(ng-if="state=='install-error'")
+                | Chrome Extension installation failed

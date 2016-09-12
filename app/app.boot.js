@@ -1,8 +1,8 @@
 var Application = angular.module('cbgui', ['ngRoute', 'ui.bootstrap', 'chart.js'])
 
-import * as _ from 'lodash'
 import prettyBytes from 'pretty-bytes'
-import { info } from 'loglevel'
+import { info, debug } from 'loglevel'
+import * as path from 'path'
 
 import { Routes } from './app.routes'
 import { COMPONENTS, SERVICES } from './app.config'
@@ -10,13 +10,25 @@ import { COMPONENTS, SERVICES } from './app.config'
 import { ApplicationCtrl } from './app.controller'
 
 
-function bootstrapComponent(component) {
-    var pageCtrl = component.PAGE_CONTROLLER
-    var ctrls = component.CONTROLLERS
+function bootstrapComponent(componentName, component) {
+    var ctrls = component.CONTROLLERS || []
+    var routes = component.ROUTES || []
 
-    Application.controller(pageCtrl.name, pageCtrl)
-    _.each(ctrls, (ctrl) => {
+    debug(ctrls)
+    ctrls.forEach(ctrl => {
+        debug(`Adding controller ${ctrl.name}`)
         Application.controller(ctrl.name, ctrl)
+    })
+
+    routes.forEach(route => {
+        const templatePath = path.join(componentName, route.template)
+        debug(`Adding route ${route.path} -> ${templatePath}`)
+        Application.config($routeProvider => {
+            $routeProvider.when(route.path, {
+                templateUrl: templatePath,
+                controller: route.controller
+            })
+        })
     })
 }
 
@@ -31,7 +43,7 @@ COMPONENTS.forEach(componentName => {
     var component = require(componentName)
 
     info("Loading Component: " + componentName)
-    bootstrapComponent(component)
+    bootstrapComponent(componentName, component)
 })
 
 SERVICES.forEach(serviceName => {

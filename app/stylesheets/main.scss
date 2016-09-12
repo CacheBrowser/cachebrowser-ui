@@ -32,6 +32,15 @@ $dragger-height: 30px;
     #mainnav {
         padding-top: $dragger-height;
     }
+
+    .p-fill {
+        padding-bottom: 100%;
+        margin-bottom: -100%;
+    }
+
+    .p-base {
+        background-color: white;
+    }
 }
 
 // Nav Fix
@@ -93,7 +102,9 @@ $dragger-height: 30px;
     cursor: pointer;
 }
 
+
 @import 'home';
 @import 'monitor';
 @import 'bootstrapper';
 @import 'news';
+@import 'loader';

@@ -1,4 +1,6 @@
 import { HomeCtrl } from './controller'
 
-export const PAGE_CONTROLLER = HomeCtrl
-export const CONTROLLERS = []
+export const CONTROLLERS = [ HomeCtrl ]
+
+export const ROUTES = [
+]

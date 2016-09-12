@@ -2,6 +2,7 @@
 var electron = require('electron') // Dont use import syntax for this
 
 import {WINDOWS, OSX, LINUX, isPlatform, UnsupportedPlatform} from './common/platform'
+import * as log from 'loglevel'
 
 // Module to control application life.
 const app = electron.app
@@ -9,6 +10,7 @@ const app = electron.app
 const BrowserWindow = electron.BrowserWindow
 
 
+log.setLevel("debug")
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
