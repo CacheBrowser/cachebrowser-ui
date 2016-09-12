@@ -2,9 +2,9 @@
     .panel-heading
         .panel-title #[i.fa.fa-chrome.fa-lg] Chrome
     .panel-body
-            .well.well-primary(ng-if="state=='none'", ng-click="install()")
+            .well.well-primary(ng-if="state=='none'")
                 | Install the CacheBrowser plugin for Chrome
-                .button.btn.btn-success.btn-install
+                .button.btn.btn-success.btn-install(ng-click="install()")
                     | Install
             .loader-container(ng-if="state=='loading'")
                 .loader

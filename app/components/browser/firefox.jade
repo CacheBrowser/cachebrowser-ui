@@ -1,0 +1,16 @@
+#p-firefox.p-browser-plugin.p-fill.p-base.panel
+    .panel-heading
+        .panel-title #[i.fa.fa-firefox.fa-lg] Firefox
+    .panel-body
+        .well.well-primary(ng-if="state=='none'")
+            | Install the CacheBrowser Firefox Add-On
+            .button.btn.btn-success.btn-install(ng-click="install()")
+                | Install
+        .loader-container(ng-if="state=='downloading' || state=='running-firefox'")
+            .loader
+        .text-center.text-2x.text-bold(ng-if="state=='downloading'") Downloading Add-On
+        .text-center.text-2x.text-bold(ng-if="state=='running-firefox'") Opening Firefox
+        .alert.alert-success(ng-if="state=='firefox-opened'")
+            | Continue Add-On installation on Firefox
+        .alert.alert-danger(ng-if="state=='install-error'")
+            | Firefox Add-On installation failed

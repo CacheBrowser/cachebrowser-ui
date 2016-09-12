@@ -9,14 +9,14 @@ const CHROME_EXTENSION_ID = "dimjobhopkpfnbojomeldpkmdekchboh"
 
 export function installChromeExtension() {
     if (isPlatform(WINDOWS)) {
-        return installOnWindows();
+        return installOnWindows()
     } else {
-        return installOnLinuxOrMac();
+        return installOnLinuxOrMac()
     }
 }
 
 function installOnLinuxOrMac() {
-    const homeDir = process.env[(process.platform == 'win32') ? 'USERPROFILE' : 'HOME'];
+    const homeDir = process.env[(process.platform == 'win32') ? 'USERPROFILE' : 'HOME']
     const prefDir = isPlatform(OSX)
         ? path.join(homeDir, 'Library/Application Support/Google/Chrome/External Extensions/')
         : '/usr/share/google-chrome/extensions/'
