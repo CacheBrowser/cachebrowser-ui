@@ -1,0 +1,42 @@
+#p-news {
+  height: 100vh;
+
+  .panel {
+    .panel-heading {
+      height: 12vh;
+
+      .panel-control {
+        float: none;
+      }
+
+      .nav-tabs {
+        li {
+          &.active {
+            //font-weight: bold;
+            cursor: default;
+          }
+
+          cursor: pointer;
+        }
+      }
+    }
+    .panel-body {
+      height: 90vh;
+    }
+
+    .panel-footer {
+      padding: 0px;
+      height: 10vh;
+    }
+  }
+
+}
+
+#p-supported-websites {
+  .featured-websites{
+
+    .featured-website {
+
+    }
+  }
+}

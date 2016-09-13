@@ -1,0 +1,20 @@
+#p-news
+    .panel(ng-controller="NewsCtrl")
+        .panel-heading
+            .panel-control
+                ul.nav.nav-tabs
+                    li(ng-class="isTab('news') ? 'active' : ''" ng-click="changeTab('news')")
+                        a Recent News
+                    li(ng-class="isTab('sup-web') ? 'active' : ''" ng-click="changeTab('sup-web')")
+                        a Supported Websites
+        .panel-body
+            .tab-news(ng-if="isTab('news')")
+                News
+            #p-supported-websites(ng-controller="SupportedWebsitesCtrl", ng-if="isTab('sup-web')")
+                .alert.alert-info(ng-if="showHelp")
+                    button.close(ng-click="hideHelp()") #[span x]
+                    | Get a list of websites known to be supported by CacheBrowser here
+                .featured-websites
+                    h4 Featured Websites
+                    .featured-website
+
