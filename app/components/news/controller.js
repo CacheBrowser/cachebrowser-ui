@@ -17,4 +17,4 @@ export function SupportedWebsitesCtrl($scope, storage) {
         storage.set('supported-websites-show-help', true)
         $scope.showHelp = false
     }
-}~~~~~~‍~~~~~~~~
+}
