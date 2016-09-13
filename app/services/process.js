@@ -48,7 +48,7 @@ class ProcessManager {
             cbpath = path.join(platform.projectRoot(), cbpath)
         }
 
-        warn(cbpath)
+        info(`Starting process at ${cbpath}`)
         this.process = spawn(cbpath, [], {
             stdio: ['ignore', 'ignore', 'ignore'],
             detached: true
@@ -57,13 +57,13 @@ class ProcessManager {
 
         this.running = true
 
-        this.process.stderr.on('data', function(data) {
-            info(data.toString())
-        })
-
         this.process.on('error', err => {
             warn(`Process Error ${err}`)
         })
+
+        // this.process.stderr.on('data', function(data) {
+        //     info(data.toString())
+        // })
 
         // TODO 'exit' for Windows
         this.process.on('close', (code, signal) => {

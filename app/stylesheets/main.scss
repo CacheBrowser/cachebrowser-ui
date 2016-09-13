@@ -41,6 +41,18 @@ $dragger-height: 30px;
     .p-base {
         background-color: white;
     }
+
+    .panel {
+        &.borderless {
+            box-shadow: none;
+        }
+
+        .panel-body {
+            &.sm-padding {
+                padding: 15px;
+            }
+        }
+    }
 }
 
 // Nav Fix

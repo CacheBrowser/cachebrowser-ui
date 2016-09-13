@@ -39,6 +39,7 @@ export function HomeCtrl($scope, processManager) {
         }
     }
 
+
     $scope.toggleProcess = function() {
         if (!processManager.isRunning()) {
             processManager.startProcess()
