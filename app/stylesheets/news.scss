@@ -34,9 +34,11 @@
 
 #p-supported-websites {
   .featured-websites{
-
+    overflow: auto;
     .featured-website {
-
+      display: inline-block;
+      vertical-align: center;
+      margin-left: 20px;
     }
   }
 }

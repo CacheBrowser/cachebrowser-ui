@@ -14,7 +14,29 @@
                 .alert.alert-info(ng-if="showHelp")
                     button.close(ng-click="hideHelp()") #[span x]
                     | Get a list of websites known to be supported by CacheBrowser here
-                .featured-websites
+                .alert.alert-dark.featured-websites(ng-if="state.showFeatured")
+                    button.close(ng-click="state.showFeatured=false")
+                        span x
                     h4 Featured Websites
-                    .featured-website
+                    a.featured-website(ng-repeat="site in featuredSites track by site.url" href="#")
+                        img(ng-src="{{mediaUrl}}{{site.image}}" width="80")
+
+
+                .row
+                    .form-inline
+                        .form-group
+                            input(type="text" placeholder="Search" ng-model='searchQuery')
+                .row
+                    table.table.table-condensed.table-hover
+                        thead
+                            th URL
+                            th CDN
+                            th CDN Hosting
+                        tbody
+                            tr(ng-repeat="site in sites track by site.url")
+                                td(ng-click="openSite(site)") {{ site.url }}
+                                td {{ site.cdn }}
+                                td {{ site.cdn_type }}
+
+                uib-pagination(total-items="sites.length" ng-model="page" ng-change="search()" items-per-page="pageSize")
 

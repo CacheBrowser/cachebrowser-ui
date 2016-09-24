@@ -12,12 +12,20 @@ import { ApplicationCtrl } from './app.controller'
 
 function bootstrapComponent(componentName, component) {
     var ctrls = component.CONTROLLERS || []
+    var services = component.SERVICES || []
     var routes = component.ROUTES || []
 
     debug(ctrls)
     ctrls.forEach(ctrl => {
         debug(`Adding controller ${ctrl.name}`)
         Application.controller(ctrl.name, ctrl)
+    })
+
+    services.forEach(service => {
+        debug(`Adding service ${service.name}`)
+        let name = service.serviceName ? service.serviceName() : null
+        name = name || service.name
+        Application.service(name, service)
     })
 
     routes.forEach(route => {
