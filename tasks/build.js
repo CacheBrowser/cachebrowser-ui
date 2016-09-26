@@ -13,6 +13,8 @@ var sourcemaps = require('gulp-sourcemaps');
 var babel = require('gulp-babel');
 var eslint = require('gulp-eslint');
 var yargs = require('yargs');
+var concat = require('gulp-concat');
+var merge = require('merge-stream');
 
 var utils = require('./utils');
 
@@ -59,7 +61,8 @@ gulp.task("babel", function () {
     return gulp.src([srcDir.path('**/*.js')].concat(babelIgnore))
         .pipe(sourcemaps.init())
         .pipe(babel({
-            presets: ['es2015']
+            presets: ['es2015'],
+
         }))
         .pipe(sourcemaps.write('.'))
         .pipe(gulp.dest(destDir.path('.')));
@@ -67,10 +70,16 @@ gulp.task("babel", function () {
 
 
 gulp.task('sass', function () {
-    return gulp.src(srcDir.path('stylesheets/main.scss'))
-        .pipe(sass({ style: 'expanded' }))
-        .pipe(plumber())
-        .pipe(gulp.dest(destDir.path('stylesheets')));
+    return merge([
+        gulp.src(srcDir.path('stylesheets/main.scss'))
+          .pipe(sass({ style: 'expanded' }))
+          .pipe(plumber())
+          .pipe(gulp.dest(destDir.path('stylesheets'))),
+        gulp.src(srcDir.path('components/**/*.scss'))
+          .pipe(concat('styles'))
+          .pipe(sass({ style: 'expanded' }))
+          .pipe(gulp.dest(destDir.path('stylesheets')))
+    ])
 });
 
 
@@ -110,7 +119,7 @@ gulp.task('package-json', function () {
 });
 
 
-gulp.task('watch', function () {
+gulp.task('watch', ['build'], function () {
     watch(paths.copyFromAppDir, { cwd: 'app' }, batch(function (events, done) {
         gulp.start('copy', done);
     }));

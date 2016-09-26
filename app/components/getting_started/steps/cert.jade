@@ -1,0 +1,21 @@
+extends base.jade
+
+block title
+  | Install CacheBrowser Root Certificate
+
+block body
+  #s-cert
+
+    p
+      | In order to work properly, CacheBrowser requires that you trust a root certificate
+      | on your system.
+
+    .alert.alert-warning
+      | The certificate is generated and stored locally on your system, ... (some warning about the cert)
+
+
+    .text-center
+      .btn.btn-success.btn-lg.btn-rounded.install(ng-if="$$.state=='none'" ng-click="$$.install()")
+        | Install Root Certificate
+      .btn.btn-primary.btn-lg.btn-rounded.install(ng-if="$$.state=='error'" ng-click="$$.install()")
+        | Retry

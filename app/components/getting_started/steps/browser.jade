@@ -1,0 +1,34 @@
+extends base.jade
+
+block title
+  | Install Browser Plugin
+
+block body
+  #s-plugins
+    p Choose your preferred browser
+    .browsers
+      span.browser.chrome(ng-click="$$.promptInstall('Chrome')")
+        i.browser-icon.fa.fa-4x.fa-chrome
+      span.browser.firefox(ng-click="$$.promptInstall('Firefox')")
+        i.browser-icon.fa.fa-4x.fa-firefox
+
+
+  script(type="text/ng-template" id="promptTemplate")
+    .modal-header
+      .modal-title Install {{ $$.browser }} Plugin
+    .modal-body.prompt-modal
+      div(ng-if="$$.state == 'none'") Would you like to install the {{ $$.browser }} browser plugin?
+      .loading(ng-if="$$.state != 'none'")
+        | {{ $$.stateMessage }}
+
+    .modal-footer
+      div(ng-if="$$.state == 'none'")
+        .btn.btn-danger(ng-click="$$.modal.dismiss()") No
+        .btn.btn-success(ng-click="$$.install()") Yes
+      div(ng-if="$$.state == 'loading'")
+        .btn.btn-danger(ng-click="$$.modal.dismiss()") Cancel
+      div(ng-if="$$.state == 'success'")
+        .btn.btn-primary(ng-click="$$.modal.close()") Close
+      div(ng-if="$$.state == 'error'")
+        .btn.btn-danger(ng-click="$$.modal.dismiss()") Cancel
+        .btn.btn-success(ng-click="$$.install()") Retry

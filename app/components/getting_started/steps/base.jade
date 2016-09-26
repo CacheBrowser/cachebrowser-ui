@@ -1,0 +1,18 @@
+#p-getting-started.p-base.p-fill
+  .panel
+    .panel-heading
+      .panel-title Getting Started
+  .panel-body
+    .step
+      .step-header
+        span.step-number
+          block number
+            | Step {{ $$.stepNumber }}.
+        span.step-title
+          block title
+      .step-body
+          block body
+      .step-footer
+        a.skip(ng-if="$$.allowSkip && !$$.continue" ng-href="#/getting_started/{{ $$.stepNumber + 1 }}") Skip
+        a.btn.btn-primary.btn-rounded.continue(ng-if="$$.continue" ng-href="#/getting_started/{{ $$.stepNumber + 1 }}")
+          | Continue

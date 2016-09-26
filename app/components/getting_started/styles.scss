@@ -1,0 +1,95 @@
+#p-getting-started {
+  .panel-body {
+    padding-top: 10px;
+
+    h2 {
+      margin-top: 5px;
+    }
+
+    .step {
+      text-align: center;
+      .step-header {
+        font-size: 24px;
+        margin-bottom: 20px;
+
+        .step-number {
+          font-weight: bold;
+          margin-right: 10px;
+        }
+      }
+
+      .step-body {
+        padding-top: 20px;
+
+
+      }
+
+      .step-footer {
+        position: fixed;
+        bottom: 50px;
+        right: 80px;
+        font-size: 14px;
+        .skip {
+          color: #999;
+          &:hover {
+            color: #666;
+          }
+        }
+        .continue {
+          padding-left: 20px;
+          padding-right: 20px;
+        }
+      }
+    }
+
+
+
+    #s-plugins {
+      .browsers {
+        padding: 20px;
+        .browser {
+          cursor: pointer;
+          margin: 0px 20px;
+          color: #777;
+
+          &.chrome:hover {
+            color: #5aaedc;
+          }
+          &.firefox:hover {
+            color: #f0a238;
+          }
+        }
+
+      }
+    }
+
+    #s-finish {
+      padding-top: 100px;
+      .btn {
+        width: 150px;
+      }
+    }
+
+    #s-cert {
+      padding: 0px 30px;
+      text-align: left;
+
+      .btn.install {
+        margin-top: 10px;
+        font-size: 14px;
+        width: 200px;
+      }
+    }
+  }
+
+  .modal-dialog {
+    min-width: 60%;
+    margin-left: 100px;
+
+    .prompt-modal {
+      .loading {
+        font-size: 14px;
+      }
+    }
+  }
+}

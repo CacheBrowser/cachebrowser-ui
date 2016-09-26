@@ -1,9 +1,17 @@
-export function HomeCtrl($scope, processManager) {
+import { info } from 'loglevel'
+
+export function HomeCtrl($scope, processManager, storage, $location) {
     if (processManager.isRunning()) {
         $scope.cbStatus = 'running'
     } else {
         $scope.cbStatus = 'stopped'
     }
+
+    storage.get('gettingStartedCompleted', val => {
+      if (!val) {
+        $location.path('/getting_started')
+      }
+    })
 
     $scope.$on('process/start', () => {
         $scope.cbStatus = 'running'

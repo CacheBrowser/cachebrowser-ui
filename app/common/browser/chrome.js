@@ -1,5 +1,5 @@
 /* eslint-disable */
-import {isPlatform, WINDOWS, OSX, LINUX} from '../../common/platform'
+import {isPlatform, WINDOWS, OSX, LINUX} from '../platform'
 import * as jetpack from 'fs-jetpack'
 import { info, warn } from 'loglevel'
 import * as path from 'path'

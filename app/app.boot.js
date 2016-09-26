@@ -34,7 +34,8 @@ function bootstrapComponent(componentName, component) {
         Application.config($routeProvider => {
             $routeProvider.when(route.path, {
                 templateUrl: templatePath,
-                controller: route.controller
+                controller: route.controller,
+                controllerAs: route.controllerAs
             })
         })
     })

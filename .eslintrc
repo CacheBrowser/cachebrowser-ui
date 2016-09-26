@@ -16,7 +16,7 @@
     "Set": true,
     "document": true,
     "WebSocket": true,
-
+    "Promise": true,
     "angular": true
   },
   "rules": {

@@ -5,7 +5,8 @@ export var COMPONENTS = [
     './components/monitor',
     './components/bootstrapper',
     './components/news',
-    './components/browser'
+    './components/browser',
+    './components/getting_started'
 ]
 
 export var SERVICES = [
