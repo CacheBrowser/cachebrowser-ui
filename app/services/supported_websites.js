@@ -28,5 +28,8 @@ export class SupportedWebsitesAPI {
       })
   }
 
-
 }
+
+export var SERVICE_NAME = "SupportedWebsitesAPI"
+export var SERVICE = SupportedWebsitesAPI
+

@@ -12,5 +12,6 @@ export var COMPONENTS = [
 export var SERVICES = [
     './services/ipc',
     './services/process',
-    './services/storage'
+    './services/storage',
+    './services/supported_websites'
 ]

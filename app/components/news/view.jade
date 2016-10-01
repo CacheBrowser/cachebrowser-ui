@@ -1,15 +1,17 @@
 #p-news
     .panel(ng-controller="NewsCtrl")
         .panel-heading
-            .panel-control
-                ul.nav.nav-tabs
-                    li(ng-class="isTab('news') ? 'active' : ''" ng-click="changeTab('news')")
-                        a Recent News
-                    li(ng-class="isTab('sup-web') ? 'active' : ''" ng-click="changeTab('sup-web')")
-                        a Supported Websites
+            //.panel-control
+            //    ul.nav.nav-tabs
+            //        li(ng-class="isTab('news') ? 'active' : ''" ng-click="changeTab('news')")
+            //            a Recent News
+            //        li(ng-class="isTab('sup-web') ? 'active' : ''" ng-click="changeTab('sup-web')")
+            //            a Supported Websites
+            .panel-title Supported Websites
         .panel-body
             .tab-news(ng-if="isTab('news')")
                 News
+            .row
             #p-supported-websites(ng-controller="SupportedWebsitesCtrl", ng-if="isTab('sup-web')")
                 .alert.alert-info(ng-if="showHelp")
                     button.close(ng-click="hideHelp()") #[span x]
@@ -23,20 +25,22 @@
 
 
                 .row
-                    .form-inline
-                        .form-group
-                            input(type="text" placeholder="Search" ng-model='searchQuery')
+                    .col-xs-12
+                        .form-inline
+                            .form-group
+                                input(type="text" placeholder="Search" ng-model='searchQuery')
                 .row
-                    table.table.table-condensed.table-hover
-                        thead
-                            th URL
-                            th CDN
-                            th CDN Hosting
-                        tbody
-                            tr(ng-repeat="site in sites track by site.url")
-                                td(ng-click="openSite(site)") {{ site.url }}
-                                td {{ site.cdn }}
-                                td {{ site.cdn_type }}
+                    .col-xs-12
+                        table.table.table-condensed.table-hover
+                            thead
+                                th URL
+                                th CDN
+                                th CDN Hosting
+                            tbody
+                                tr(ng-repeat="site in sites track by site.url")
+                                    td(ng-click="openSite(site)") {{ site.url }}
+                                    td {{ site.cdn }}
+                                    td {{ site.cdn_type }}
 
                 uib-pagination(total-items="sites.length" ng-model="page" ng-change="search()" items-per-page="pageSize")
 

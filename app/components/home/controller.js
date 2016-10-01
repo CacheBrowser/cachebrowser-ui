@@ -1,58 +1,80 @@
-import { info } from 'loglevel'
+import { shell } from 'electron'
 
-export function HomeCtrl($scope, processManager, storage, $location) {
-    if (processManager.isRunning()) {
+export class HomeCtrl {
+    constructor($scope, processManager, storage, $location, SupportedWebsitesAPI) {
+      const self = this
+      this.supportedWebsitesAPI = SupportedWebsitesAPI
+      this.featuredWebsites = []
+
+
+      if (processManager.isRunning()) {
         $scope.cbStatus = 'running'
-    } else {
+      } else {
         $scope.cbStatus = 'stopped'
-    }
-
-    storage.get('gettingStartedCompleted', val => {
-      if (!val) {
-        $location.path('/getting_started')
       }
-    })
 
-    $scope.$on('process/start', () => {
+      storage.get('gettingStartedCompleted', val => {
+        if (!val) {
+          $location.path('/getting_started')
+        }
+      })
+
+      $scope.$on('process/start', () => {
         $scope.cbStatus = 'running'
         $scope.$apply()
-    })
+      })
 
-    $scope.$on('process/stop', () => {
+      $scope.$on('process/stop', () => {
         $scope.cbStatus = 'stopped'
         $scope.$apply()
-    })
+      })
 
-    $scope.runningStatus = {
+      self.runningStatus = {
         _pick: function(running, stopped, dunno) {
-            if ($scope.cbStatus == 'running') {
-                return running
-            } else if ($scope.cbStatus == 'stopped') {
-                return stopped
-            } else {
-                return dunno
-            }
+          if ($scope.cbStatus == 'running') {
+            return running
+          } else if ($scope.cbStatus == 'stopped') {
+            return stopped
+          } else {
+            return dunno
+          }
         },
         color: function () {
-            return this._pick('success', 'danger', 'warning')
+          return this._pick('success', 'danger', 'warning')
         },
         invertedColor: function () {
-            return this._pick('danger', 'success', 'warning')
+          return this._pick('danger', 'success', 'warning')
         },
         message: function() {
-            return this._pick('Running', 'Stopped', 'No Idea')
+          return this._pick('Running', 'Stopped', 'No Idea')
         },
         actionMessage: function () {
-            return this._pick('Stop', 'Start', 'Start')
+          return this._pick('Stop', 'Start', 'Start')
         }
+      }
+
+
+      self.toggleProcess = function() {
+        if (!processManager.isRunning()) {
+          processManager.startProcess()
+        } else {
+          processManager.stopProcess()
+        }
+      }
+
+
+      this.loadFeaturedWebsites()
     }
 
+    loadFeaturedWebsites() {
+      const self = this
+      this.supportedWebsitesAPI.getFeaturedWebsites()
+        .then(results => {
+          self.featuredWebsites = results
+        })
+    }
 
-    $scope.toggleProcess = function() {
-        if (!processManager.isRunning()) {
-            processManager.startProcess()
-        } else {
-            processManager.stopProcess()
-        }
+    openSite(site) {
+      shell.openExternal(site.url)
     }
 }

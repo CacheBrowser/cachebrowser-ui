@@ -54,7 +54,7 @@
 </head>
 
 
-<body ng-app="cbgui" ng-controller='ApplicationCtrl'>
+<body ng-app="cbgui" ng-controller='ApplicationCtrl as $$'>
     <div id="osx-dragger"></div>
     <div id="container" class="effect mainnav-sm">
 
@@ -75,8 +75,8 @@
                             </li>
                             <li class="col-xs-4" >
                                 <a id="page-alert" class="shortcut-grid" href="#/news">
-                                    <i class="fa fa-newspaper-o"></i>
-                                    <span> News </span>
+                                    <i class="fa fa-globe"></i>
+                                    <span> Supported Websites </span>
                                 </a>
                             </li>
                             <li class="col-xs-4" >
@@ -102,7 +102,7 @@
                 </div>
             </nav>
 
-            <i id="dev-tools-toggle" class="fa fa-terminal" ng-click="toggleDevTools()"></i>
+            <i id="dev-tools-toggle" class="fa fa-terminal" ng-click="$$.toggleDevTools()"></i>
         </div>
     </div>
 </body>

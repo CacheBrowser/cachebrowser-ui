@@ -1,9 +1,12 @@
 import { remote } from 'electron'
 
-export function ApplicationCtrl($scope) {
-    $scope.cbStatus = 'stopped'
+export class ApplicationCtrl {
+    constructor(processManager) {
+        this.toggleDevTools = () => {
+            remote.getCurrentWindow().toggleDevTools()
+        }
 
-    $scope.toggleDevTools = () => {
-        remote.getCurrentWindow().toggleDevTools()
+        processManager.startProcess()
     }
+
 }

@@ -2,31 +2,57 @@
     header
         .title.cb-font   CacheBrowser
 
+    .row.status-row
+        b Status:
+        .label(ng-class="'label-'+$$.runningStatus.color()") {{$$.runningStatus.message()}}
     .row
-        .col-xs-6
-
+        //.col-xs-6
+        //    //.panel.borderless
+        //    //    .panel-body.sm-padding
+        //
+        //            //.status-box.alert(ng-class="'alert-'+runningStatus.color()") CacheBrowser is #[span(ng-if="cbStatus != 'running'") not] running
+        //            //button.btn.btn-block.bold(ng-class="'btn-'+runningStatus.invertedColor()" ng-click="toggleProcess()")
+        //            //    | {{runningStatus.actionMessage()}} Cachebrowser
+        //
+        //    .panel.borderless
+        //        .panel-heading
+        //            .panel-title
+        //                span.bold Install Browser Plugins
+        //        .panel-body
+        //            .browser-icon-container
+        //                a(ng-href="#/browser/chrome")
+        //                    i.browser-icon.fa.fa-4x.fa-chrome
+        //                a(ng-href="#/browser/firefox")
+        //                    i.browser-icon.fa.fa-4x.fa-firefox
+        //
+        //.col-xs-6
+        //    .panel.news.borderless
+        //        .panel-heading
+        //            .panel-title
+        //                span.bold Whats New?
+        //        .panel-body
+    .row
+        .col-xs-12
             .panel.borderless
-                .panel-body.sm-padding
-                    .status-box.alert(ng-class="'alert-'+runningStatus.color()") CacheBrowser is #[span(ng-if="cbStatus != 'running'") not] running
-                    button.btn.btn-block.bold(ng-class="'btn-'+runningStatus.invertedColor()" ng-click="toggleProcess()")
-                        | {{runningStatus.actionMessage()}} Cachebrowser
-            .panel.borderless
-                .panel-heading
-                    .panel-title
-                        span.bold Install Browser Plugins
-                .panel-body
-                    .browser-icon-container
-                        a(ng-href="#/browser/chrome")
-                            i.browser-icon.fa.fa-4x.fa-chrome
-                        a(ng-href="#/browser/firefox")
-                            i.browser-icon.fa.fa-4x.fa-firefox
-
-
-
-        .col-xs-6
-            .panel.news.borderless
                 .panel-heading
                     .panel-title
                         span.bold Whats New?
                 .panel-body
+
+
+    .row
+        .col-xs-12
+            .panel.featured-websites.borderless
+                .panel-heading
+                    .panel-title
+                        span.bold Featured Websites
+                .panel-body
+                    .featured-website(ng-repeat="item in $$.featuredWebsites track by $index")
+                        a(ng-click="$$.openSite(item)")
+                            //.img-wrapper
+                            img(ng-src="https://data.cbrowz.co{{item.image}}")
+                            //label {{item.name}}
+
+
+
 
