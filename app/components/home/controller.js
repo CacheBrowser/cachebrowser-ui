@@ -1,11 +1,13 @@
 import { shell } from 'electron'
+import * as url from 'url'
 
 export class HomeCtrl {
-    constructor($scope, processManager, storage, $location, SupportedWebsitesAPI) {
+    constructor($scope, ipc, processManager, storage, $location, SupportedWebsitesAPI) {
       const self = this
       this.supportedWebsitesAPI = SupportedWebsitesAPI
       this.featuredWebsites = []
 
+      this.ipc = ipc
 
       if (processManager.isRunning()) {
         $scope.cbStatus = 'running'
@@ -75,6 +77,13 @@ export class HomeCtrl {
     }
 
     openSite(site) {
-      shell.openExternal(site.url)
+      const self = this
+      var hostname = url.parse(site.url).hostname
+      this.ipc.request('/website/enable', {website: hostname})
+        .then(() => {
+          self.ipc.request('/browser/open', {url: site.url})
+        }).catch(() => {
+          shell.openExternal(site.url)
+        })
     }
 }

@@ -1,6 +1,6 @@
-import * as _ from 'lodash'
 import Reconnector from '../common/websocket'
 import { info, debug, error } from 'loglevel'
+import * as _ from 'lodash'
 
 class IPCService {
     constructor($rootScope, $q) {
@@ -47,14 +47,14 @@ class IPCService {
     }
 
     onmessage(message) {
-        var messageType = message.message_type
+        var messageType = message.type
 
-        if (messageType == 'publish') {
-            var data = message.data
+        if (messageType == 'pub') {
+            var data = message.message
             var channel = message.channel
-            this.publish(channel, data)
+            this.handle_publish(channel, data)
 
-        } else if (messageType == 'response') {
+        } else if (messageType == 'rpc_resp') {
             this.onresponse(message)
         }
     }
@@ -82,74 +82,67 @@ class IPCService {
     _subscribe(channel, id, callback) {
         info("Subscribed to " + channel)
         this.listeners[channel][id] = callback
-        this.request('/subscribe', {
+        this.sendMessage({
+            type: 'sub',
             channel: channel,
-            subscribtion_id: id
+            subscription_id: id
         })
     }
 
     _unsubscribe(channel, id) {
         info("Unsubscribed from " + channel)
         delete this.listeners[channel][id]
-        this.request('/unsubscribe', {
+        this.sendMessage({
+            type: 'unsub',
             channel: channel,
-            subscribtion_id: id
+            subscription_id: id
         })
     }
 
-    publish(channel, message) {
+    handle_publish(channel, message) {
         _.each(this.listeners[channel], function(callback) {
             callback(message, channel)
         })
     }
 
+    publish(channel, message) {
+        this.sendMessage({
+            type: 'pub',
+            channel: channel,
+            message: message
+        })
+    }
+
     request(route, params) {
+        const self = this
+
         var defered = this.Q.defer()
 
-        var sendRequest = () => {
-            var id = this.nextRequestId++
+        var id = this.nextRequestId++
 
-            var message = {
-                route: route,
-                params: params,
-                request_id: id
-            }
+        var message = {
+            type: 'rpc_req',
+            method: route,
+            params: params,
+            request_id: id
+        }
 
-            this.pendingRequests[id] = {
+        this.sendMessage(message, () => {
+            self.pendingRequests[id] = {
                 message: message,
                 defered: defered
             }
-
-            this.sock.send(JSON.stringify(message))
-        }
-
-        if (this.sock.readyState != WebSocket.OPEN) {
-            this.sock.forceReconnect()
-
-            var open = () => {
-                this.sock.removeListener('open', open)
-                this.sock.removeListener('close', close)
-                process.nextTick(sendRequest)
-            }
-
-            var close = () => {
-                this.sock.removeListener('open', open)
-                this.sock.removeListener('close', close)
-                defered.reject()
-            }
-
-            this.sock.once('open', open)
-            this.sock.once('close', close)
-        } else {
-            sendRequest()
-        }
+        }, () => {
+            defered.reject()
+        })
 
         return defered.promise
     }
 
     onresponse(message) {
+
         var id = message.request_id
-        var response = message.response
+        var response = message.message
 
         var request = this.pendingRequests[id]
         delete this.pendingRequests[id]
@@ -160,6 +153,38 @@ class IPCService {
 
     ping() {
         return this.request('/ping')
+    }
+
+    sendMessage(message, success, fail) {
+        var realSend = () => {
+            this.sock.send(JSON.stringify(message))
+            if (success) {
+                success()
+            }
+        }
+
+        if (this.sock.readyState != WebSocket.OPEN) {
+            this.sock.forceReconnect()
+
+            var open = () => {
+                this.sock.removeListener('open', open)
+                this.sock.removeListener('close', close)
+                process.nextTick(realSend)
+            }
+
+            var close = () => {
+                this.sock.removeListener('open', open)
+                this.sock.removeListener('close', close)
+                if (fail) {
+                    fail()
+                }
+            }
+
+            this.sock.once('open', open)
+            this.sock.once('close', close)
+        } else {
+            realSend()
+        }
     }
 
     refreshDelay() {

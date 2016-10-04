@@ -20,7 +20,8 @@
     "angular": true
   },
   "rules": {
-    "semi": ["error", "never"]
+    "semi": ["error", "never"],
+    "no-console": 0
   },
   "envs": [
     "node",
