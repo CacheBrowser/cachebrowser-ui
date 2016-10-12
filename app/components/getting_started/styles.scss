@@ -1,6 +1,6 @@
 #p-getting-started {
   .panel-body {
-    padding-top: 10px;
+    padding-top: 70px;
 
     h2 {
       margin-top: 5px;
@@ -44,22 +44,35 @@
 
 
 
-    #s-plugins {
+    #s-browser {
       .browsers {
         padding: 20px;
+        margin-top: 30px;
         .browser {
           cursor: pointer;
-          margin: 0px 20px;
+          margin: 0px 30px;
           color: #777;
+          font-size: 18px;
 
-          &.chrome:hover {
+          &.chrome:hover,&.chrome.active {
             color: #5aaedc;
           }
-          &.firefox:hover {
+          &.firefox:hover,&.firefox.active {
             color: #f0a238;
           }
         }
 
+      }
+    }
+
+    #s-plugin {
+      .btn.install {
+        margin-top: 40px;
+        width: 150px;
+      }
+      .status {
+        margin-top: 50px;
+        font-size: 14px;
       }
     }
 

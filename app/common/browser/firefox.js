@@ -24,7 +24,7 @@ export function installFirefoxExtension() {
 
 function downloadAddOn(eventEmitter, tmpPath, callback) {
     var file = jetpack.createWriteStream(tmpPath)
-    https.get("https://cachebrowser.net/download/cachebrowser-firefox-0.1.0.xpi", function(response) {
+    https.get("https://cachebrowser.net/download/cachebrowser-firefox-latest.xpi", function(response) {
         response.pipe(file)
         response.on('end', () => {
             callback()

@@ -10,8 +10,8 @@ block body
       | In order to work properly, CacheBrowser requires that you trust a root certificate
       | on your system.
 
-    .alert.alert-warning
-      | The certificate is generated and stored locally on your system, ... (some warning about the cert)
+    //.alert.alert-warning
+    //  | The certificate is generated and stored locally on your system, ... (some warning about the cert)
 
 
     .text-center
@@ -19,3 +19,4 @@ block body
         | Install Root Certificate
       .btn.btn-primary.btn-lg.btn-rounded.install(ng-if="$$.state=='error'" ng-click="$$.install()")
         | Retry
+      .well(ng-if="$$.state=='firefox-help'") Check the "Trust this CA to identify websites" option.

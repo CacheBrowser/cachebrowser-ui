@@ -1,0 +1,25 @@
+extends base.jade
+
+block title
+  | Install Browser Plugin
+
+block body
+  #s-plugin
+    p Click to install the CacheBrowser plugin on your browser.
+
+    .btn.btn-success.btn-lg.btn-rounded.install(ng-click="$$.promptInstall()"
+      ng-if="$$.state == 'none'")
+      | Install
+    p.status(ng-if="$$.state != 'none'") {{ $$.stateMessage }}
+
+
+  script(type="text/ng-template" id="promptTemplate")
+    .modal-header
+      .modal-title Install {{ $$.browser }} Plugin
+    .modal-body.prompt-modal
+      p Would you like to install the {{ $$.browser }} browser plugin?
+
+    .modal-footer
+      div
+        .btn.btn-danger(ng-click="$$.modal.dismiss()") No
+        .btn.btn-success(ng-click="$$.install()") Yes

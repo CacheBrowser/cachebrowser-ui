@@ -15,8 +15,9 @@ export class HomeCtrl {
         $scope.cbStatus = 'stopped'
       }
 
+      // storage.set('gettingStartedCompleted', false)
       storage.get('gettingStartedCompleted', val => {
-        if (!val) {
+        if (val == 'false') {
           $location.path('/getting_started')
         }
       })

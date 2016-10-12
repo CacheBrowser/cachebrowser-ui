@@ -13,5 +13,6 @@ export var SERVICES = [
     './services/ipc',
     './services/process',
     './services/storage',
+    './services/browser',
     './services/supported_websites'
 ]

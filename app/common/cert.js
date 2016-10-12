@@ -14,13 +14,18 @@ export function installRootCert() {
   }
 }
 
-function installRootCertOsX() {
+export function getCertFilePath() {
   const homeDir = process.env['HOME']
+  if (isPlatform(OSX)) {
+    return path.join(homeDir, '.mitmproxy/mitmproxy-ca-cert.pem')
+  }
+}
 
+function installRootCertOsX() {
   info("Installing root certificate")
 
   return new Promise((resolve, reject) => {
-    const proc = spawn('security', ['add-trusted-cert', path.join(homeDir, '.mitmproxy/mitmproxy-ca-cert.pem')])
+    const proc = spawn('security', ['add-trusted-cert', getCertFilePath()])
 
     proc.stdout.on('data', data => {
       info(data.toString())
