@@ -1,0 +1,32 @@
+#p-settings {
+  .panel-control {
+    .nav {
+      a {
+        cursor: pointer;
+      }
+    }
+  }
+
+  .settings-scrambler {
+    padding-left: 20px
+  }
+
+  .splitter {
+    margin-top: 20px;
+    margin-bottom: 40px;
+  }
+
+  .overhead.form-group {
+    margin-top: 40px;
+
+    .row {
+      padding-left: 5px;
+    }
+
+    .value {
+      //padding-top: 12px;
+      padding-left: 20px;
+      //font-weight: bold;
+    }
+  }
+}

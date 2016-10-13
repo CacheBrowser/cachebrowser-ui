@@ -47,6 +47,14 @@ $dragger-height: 30px;
             box-shadow: none;
         }
 
+        .panel-heading {
+            .panel-title {
+                i {
+                    margin-right: 10px;
+                }
+            }
+        }
+
         .panel-body {
             &.sm-padding {
                 padding: 15px;
@@ -115,6 +123,11 @@ $dragger-height: 30px;
 }
 
 
+.switchery-checkbox {
+    label {
+        margin-left: 10px;
+    }
+}
 @import 'home';
 @import 'monitor';
 @import 'bootstrapper';

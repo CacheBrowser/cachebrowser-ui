@@ -1,0 +1,22 @@
+#p-settings.panel.p-base.p-fill
+  .panel-heading
+    .panel-control
+      ul.nav.nav-tabs
+        mixin tab(key, name)
+          li(ng-class="$$.currentTab== '" + key + "' ? 'active' : ''"
+             ng-click="$$.changeTab('" + key + "')")
+            a #{name}
+        +tab('scrambler', 'Scrambler')
+        +tab('bootstrapper', 'Bootstrapper')
+    .panel-title
+      i.fa.fa-gear
+      | Settings
+  .panel-body
+    mixin page(key)
+      div(ng-if="$$.currentTab == '" + key + "'")
+        block
+    +page('scrambler')
+      include pages/scrambler.jade
+    +page('bootstrapper')
+      include pages/bootstrapper.jade
+

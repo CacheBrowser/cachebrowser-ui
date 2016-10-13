@@ -1,0 +1,23 @@
+include ../../../common/mixins.jade
+
+.settings-scrambler(ng-controller="SettingsScramblerCtrl as $$")
+  .container
+    form.form-horizontal.form-padding
+      .form-group
+
+  .form-group.switchery-checkbox
+    input(type="checkbox" class="js-switch" ui-switch checked ng-model="$$.settings.enabled")
+    label Enable Scrambler
+  hr.hr-sm.splitter
+  +checkbox("$$.settings.drops", "!$$.settings.enabled") Drop advertisement and analytical requests
+  +checkbox("$$.settings.decoys", "!$$.settings.enabled") Send decoy requests
+
+  .overhead.form-group
+
+    label Maximum allowed overhead: #[span.value {{ $$.settings.overhead }}%]
+    .row
+      .col-xs-10
+        div(range-slider min="0" max="300" model-max="$$.overheadValueBuf" pin-handle="min"
+        disabled="!$$.settings.enabled" on-handle-up="$$.overheadSliderReleased()" attach-handle-values="true")
+      .col-xs-1.value
+

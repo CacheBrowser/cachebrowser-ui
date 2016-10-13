@@ -1,0 +1,7 @@
+mixin checkbox(model, disabled)
+  .checkbox
+    label.form-checkbox.form-normal.form-primary.form-text(ng-class="(" + model + " ? 'active' : '') + ("
+                                                                    + disabled + " ? ' disabled' : '')")
+      input(type="checkbox" ng-model=model ng-disabled=disabled)
+      block
+

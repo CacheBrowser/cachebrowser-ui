@@ -6,7 +6,8 @@ export var COMPONENTS = [
     './components/bootstrapper',
     './components/news',
     './components/browser',
-    './components/getting_started'
+    './components/getting_started',
+    './components/settings',
 ]
 
 export var SERVICES = [

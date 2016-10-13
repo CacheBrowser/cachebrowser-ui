@@ -1,4 +1,4 @@
-var Application = angular.module('cbgui', ['ngRoute', 'ui.bootstrap', 'chart.js'])
+var Application = angular.module('cbgui', ['ngRoute', 'ui.bootstrap', 'chart.js', 'NgSwitchery', 'ui-rangeSlider'])
 
 import prettyBytes from 'pretty-bytes'
 import { info, debug } from 'loglevel'
